@@ -16,16 +16,21 @@
             </div>
 
             <!-- Search Bar -->
-            <div class="hidden md:flex flex-1 mx-8 max-w-sm relative">
+            <div class="hidden md:flex flex-1 mx-8 max-w-sm relative items-center">
                 <input 
                     type="text" 
                     v-model="search"
                     @keyup.enter="handleSearch"
                     placeholder="Bạn cần tìm linh kiện gì?" 
-                    class="w-full border border-gray-300 rounded-full py-2 px-5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    class="w-full border border-gray-300 rounded-full py-2 px-5 pr-20 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
-                <button @click="handleSearch" class="absolute right-3 top-2 text-gray-500 hover:text-blue-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <button v-if="search" @click="clearSearch" class="absolute right-12 text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+                <button @click="handleSearch" class="absolute right-3 text-gray-500 hover:text-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </button>
@@ -99,6 +104,10 @@ const handleSearch = () => {
     if (search.value.trim()) {
         router.push({ path: '/products', query: { search: search.value } });
     }
+};
+
+const clearSearch = () => {
+    search.value = '';
 };
 
 const handleLogout = async () => {
