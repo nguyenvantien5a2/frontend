@@ -140,7 +140,9 @@
                                     <router-link :to="'/products/' + item.id">{{ item.name }}</router-link>
                                 </h3>
                                 <div class="flex justify-between items-end">
-                                    <span class="text-xl font-bold text-red-600">{{ item.price.toLocaleString('vi-VN') }} ₫</span>
+                                    <span class="text-xl font-bold text-red-600">
+                                        {{ Math.floor(item.price).toLocaleString('vi-VN') }} ₫
+                                    </span>
                                 </div>
                             </div>
                         </div>
