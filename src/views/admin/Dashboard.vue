@@ -123,25 +123,29 @@
                 </div>
 
                 <!-- Bars -->
-                <div class="flex-1 flex items-end justify-between gap-2 pb-8">
+                <div class="flex-1 flex items-end justify-between gap-2 pb-14">
                   <div
                     v-for="(value, key) in stats.revenueChart"
                     :key="key"
-                    class="flex-1 flex flex-col items-center relative group"
+                    class="flex-1 flex flex-col items-center justify-end relative group h-full"
                   >
-                    <!-- Tooltip -->
-                    <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                      {{ formatCurrency(value) }}
-                    </div>
-
                     <!-- Bar -->
                     <div
-                      class="w-full bg-green-500 rounded-t hover:bg-green-600 transition-colors min-h-[4px]"
+                      class="w-full bg-green-500 rounded-t hover:bg-green-600 transition-colors relative"
                       :style="{ height: calculateHeight(value) + '%' }"
-                    ></div>
+                    >
+                      <!-- Tooltip (Dữ liệu doanh thu ở giữa cột) -->
+                      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900/90 text-white text-[10px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                        {{ formatCurrency(value) }}
+                      </div>
+                    </div>
 
                     <!-- X-Axis Label -->
-                    <span v-if="shouldShowLabel(key)" class="absolute -bottom-6 text-xs font-medium text-gray-600 whitespace-nowrap">
+                    <span 
+                      v-if="shouldShowLabel(key)" 
+                      class="absolute text-[10px] font-bold text-gray-500 whitespace-nowrap transition-all"
+                      :class="selectedPeriod === 'today' ? '-bottom-6' : '-bottom-9 transform -rotate-45 origin-top-left'"
+                    >
                       {{ formatXLabel(key) }}
                     </span>
                   </div>
@@ -160,7 +164,7 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h3 class="text-xl font-bold text-gray-900 mb-6">Tỷ Lệ Danh Mục</h3>
 
-          <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1.05fr_1fr]">
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-1">
             <div class="flex flex-col items-center">
               <!-- Pie Chart -->
               <div class="relative w-48 h-48 mb-6">
@@ -180,28 +184,7 @@
                 Biểu đồ tròn hiển thị tỷ lệ sản phẩm theo danh mục
               </div>
             </div>
-
-            <div class="flex flex-col justify-between">
-              <div>
-                <div class="text-sm font-medium text-gray-600 uppercase tracking-wide mb-4">Số sản phẩm theo danh mục</div>
-                <div class="flex items-end gap-3 h-44">
-                  <div
-                    v-for="item in barChartData"
-                    :key="item.name"
-                    class="flex-1 flex flex-col items-center"
-                  >
-                    <div
-                      :style="{ height: calculateCategoryHeight(item.count) + '%', backgroundColor: item.color }"
-                      class="w-full rounded-t-3xl transition-all"
-                    ></div>
-                    <span class="mt-3 text-xs text-center text-gray-700 leading-tight">{{ item.name }}</span>
-                    <span class="text-xs font-bold text-gray-900">{{ item.count }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-
           <div class="grid grid-cols-1 gap-2 mt-8">
             <div
               v-for="(item, index) in pieChartData"
@@ -420,7 +403,7 @@ const formatXLabel = (key) => {
   if (!key) return ''
   // Nếu là lọc theo giờ (00, 01, 02...)
   if (selectedPeriod.value === 'today') {
-    return `${key.toString().padStart(2, '0')}h`
+    return `${key}h`
   }
   // Nếu là lọc theo ngày (YYYY-MM-DD)
   const parts = key.split('-')
@@ -432,10 +415,7 @@ const formatXLabel = (key) => {
 
 // Hàm kiểm tra xem có nên hiện nhãn trục X không (để tránh đè chữ khi quá dày)
 const shouldShowLabel = (key) => {
-  if (selectedPeriod.value !== 'today') return true
-  // Đối với biểu đồ 24 giờ, chỉ hiện nhãn cách mỗi 4 tiếng (0h, 4h, 8h...)
-  const hour = parseInt(key)
-  return hour % 4 === 0 || hour === 23
+  return true
 }
 
 const chartTitle = computed(() => {
