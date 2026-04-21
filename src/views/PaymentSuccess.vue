@@ -18,7 +18,7 @@
           <div v-for="(step, i) in steps" :key="i" class="relative z-10 flex flex-col items-center">
             <div :class="[
               'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-4 border-white shadow-md transition-colors',
-              i === 0 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-500'
+              i === 0 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700'
             ]">
               {{ i + 1 }}
             </div>

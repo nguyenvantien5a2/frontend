@@ -17,7 +17,7 @@
           <div class="flex justify-center mb-6">
             <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 flex flex-col items-center">
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" class="w-60 h-60" />
-              <p class="mt-4 text-sm text-gray-500 italic">Quét mã để thanh toán đơn hàng</p>
+              <p class="mt-4 text-sm text-gray-700 italic">Quét mã để thanh toán đơn hàng</p>
             </div>
           </div>
 
@@ -39,7 +39,7 @@
           </button>
 
           <div class="mt-6 text-center">
-            <router-link to="/checkout-confirm" class="text-gray-500 hover:text-blue-600 font-medium transition inline-flex items-center">
+            <router-link to="/checkout-confirm" class="text-gray-700 hover:text-blue-600 font-medium transition inline-flex items-center">
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
               Quay lại bước xác nhận
             </router-link>
@@ -51,9 +51,9 @@
           <div class="bg-white rounded-2xl shadow-xl p-6 sticky top-6">
             <h2 class="text-xl font-bold text-gray-900 mb-4">Tóm tắt đơn hàng</h2>
             <div class="space-y-3 mb-6 text-sm">
-              <div class="flex justify-between"><span class="text-gray-500">Người nhận:</span><span class="font-medium">{{ checkout.checkoutInfo.customerName }}</span></div>
-              <div class="flex justify-between"><span class="text-gray-500">SĐT:</span><span class="font-medium">{{ checkout.checkoutInfo.phone }}</span></div>
-              <div class="flex flex-col"><span class="text-gray-500">Địa chỉ:</span><span class="font-medium text-xs mt-1 bg-gray-50 p-2 rounded">{{ checkout.checkoutInfo.shippingAddress }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-700">Người nhận:</span><span class="font-medium">{{ checkout.checkoutInfo.customerName }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-700">SĐT:</span><span class="font-medium">{{ checkout.checkoutInfo.phone }}</span></div>
+              <div class="flex flex-col"><span class="text-gray-700">Địa chỉ:</span><span class="font-medium text-xs mt-1 bg-gray-50 p-2 rounded">{{ checkout.checkoutInfo.shippingAddress }}</span></div>
             </div>
 
             <div class="border-t pt-4 mb-4 max-h-48 overflow-y-auto custom-scrollbar">

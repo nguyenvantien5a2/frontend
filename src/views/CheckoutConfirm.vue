@@ -16,19 +16,19 @@
 
             <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 space-y-4">
               <div class="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200 pb-3">
-                <span class="text-gray-500 text-sm font-medium uppercase">Người nhận</span>
+                <span class="text-gray-700 text-sm font-medium uppercase">Người nhận</span>
                 <span class="font-bold text-gray-900 text-right">{{ info.customerName }} — {{ info.phone }}</span>
               </div>
               <div class="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200 pb-3">
-                <span class="text-gray-500 text-sm font-medium uppercase">Địa chỉ giao hàng</span>
+                <span class="text-gray-700 text-sm font-medium uppercase">Địa chỉ giao hàng</span>
                 <span class="font-medium text-gray-700 text-right sm:max-w-xs">{{ info.shippingAddress }}</span>
               </div>
               <div class="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200 pb-3">
-                <span class="text-gray-500 text-sm font-medium uppercase">Email</span>
+                <span class="text-gray-700 text-sm font-medium uppercase">Email</span>
                 <span class="font-medium text-gray-700">{{ info.email }}</span>
               </div>
               <div class="flex flex-col sm:flex-row sm:justify-between">
-                <span class="text-gray-500 text-sm font-medium uppercase">Ghi chú</span>
+                <span class="text-gray-700 text-sm font-medium uppercase">Ghi chú</span>
                 <span class="font-medium text-gray-700 italic">{{ info.note || 'Không có ghi chú' }}</span>
               </div>
             </div>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <h3 class="text-sm font-medium text-gray-900 truncate">{{ item.name }}</h3>
-                  <p class="text-sm text-gray-500">
+                  <p class="text-sm text-gray-700">
                     {{ Number(item.price).toLocaleString('vi-VN', { maximumFractionDigits: 0 }) }} ₫
                   </p>
                 </div>
@@ -106,7 +106,7 @@
                 class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">
                 {{ loading ? 'Đang xử lý...' : 'Xác nhận đặt hàng' }}
               </button>
-              <router-link to="/checkout-info" class="text-center text-gray-500 hover:text-blue-600 font-medium">Quay lại chỉnh sửa</router-link>
+              <router-link to="/checkout-info" class="text-center text-gray-700 hover:text-blue-600 font-medium">Quay lại chỉnh sửa</router-link>
             </div>
           </div>
         </div>

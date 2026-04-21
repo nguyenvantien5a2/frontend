@@ -48,7 +48,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <h3 class="text-sm font-medium text-gray-900 truncate">{{ item.name }}</h3>
-                  <p class="text-sm text-gray-500">
+                  <p class="text-sm text-gray-700">
                     {{ Number(item.price).toLocaleString('vi-VN', { maximumFractionDigits: 0 }) }} ₫
                   </p>
                 </div>
@@ -84,14 +84,14 @@
               <button type="submit" form="checkout-form" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">
                 Tiếp tục xác nhận
               </button>
-              <router-link to="/cart" class="text-center text-gray-500 hover:text-blue-600 font-medium">Quay lại giỏ hàng</router-link>
+              <router-link to="/cart" class="text-center text-gray-700 hover:text-blue-600 font-medium">Quay lại giỏ hàng</router-link>
             </div>
           </div>
         </div>
       </div>
 
       <div v-else class="text-center py-20 bg-white rounded-2xl shadow">
-        <p class="text-gray-500 mb-4">Giỏ hàng của bạn đang trống</p>
+        <p class="text-gray-700 mb-4">Giỏ hàng của bạn đang trống</p>
         <router-link to="/products" class="text-blue-600 font-bold">Quay lại mua sắm</router-link>
       </div>
     </div>
