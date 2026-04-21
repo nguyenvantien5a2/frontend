@@ -34,7 +34,7 @@ const routes = [
     { path: '/products/:id', name: 'product-detail', component: ProductDetailView },
     { path: '/products', name: 'products', component: ProductsView },
     { path: '/promotions', name: 'promotions', component: PromotionsView },
-    { path: '/checkout', name: 'checkout-info', component: CheckoutInfo, meta: { requiresAuth: true } },
+    { path: '/checkout-info', name: 'checkout-info', component: CheckoutInfo, meta: { requiresAuth: true } },
     { path: '/checkout-confirm', name: 'checkout-confirm', component: CheckoutConfirm, meta: { requiresAuth: true } },
     { path: '/payment', name: 'payment', component: PaymentView, meta: { requiresAuth: true } },
     { path: '/payment-success', name: 'payment-success', component: PaymentSuccessView, meta: { requiresAuth: true } },

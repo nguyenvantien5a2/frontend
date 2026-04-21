@@ -42,13 +42,15 @@
             
             <div class="space-y-3 max-h-96 overflow-y-auto pr-2 custom-scrollbar mb-6">
               <div v-for="item in cart.items" :key="item.id" class="flex items-center gap-3">
-                <div class="relative">
+                <div class="relative overflow-visible">
                   <img :src="getImageUrl(item.image_url) || 'https://via.placeholder.com/60'" class="w-16 h-16 object-cover rounded-lg border border-gray-100" />
                   <span class="absolute -top-2 -right-2 bg-gray-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">{{ item.quantity }}</span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <h3 class="text-sm font-medium text-gray-900 truncate">{{ item.name }}</h3>
-                  <p class="text-sm text-gray-500">{{ item.price.toLocaleString('vi-VN') }} ₫</p>
+                  <p class="text-sm text-gray-500">
+                    {{ Number(item.price).toLocaleString('vi-VN', { maximumFractionDigits: 0 }) }} ₫
+                  </p>
                 </div>
                 <div class="text-sm font-bold text-gray-900">
                   {{ (item.price * item.quantity).toLocaleString('vi-VN') }} ₫
@@ -76,12 +78,13 @@
                 <span>Tổng cộng:</span>
                 <span class="text-red-600">{{ finalPrice.toLocaleString('vi-VN') }} ₫</span>
               </div>
-              <div class="mt-6 flex flex-col gap-3">
-                <button type="submit" form="checkout-form" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">
-                  Tiếp tục xác nhận
-                </button>
-                <router-link to="/cart" class="text-center text-gray-500 hover:text-blue-600 font-medium">Quay lại giỏ hàng</router-link>
-              </div>
+            </div>
+
+            <div class="mt-6 flex flex-col gap-3">
+              <button type="submit" form="checkout-form" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">
+                Tiếp tục xác nhận
+              </button>
+              <router-link to="/cart" class="text-center text-gray-500 hover:text-blue-600 font-medium">Quay lại giỏ hàng</router-link>
             </div>
           </div>
         </div>

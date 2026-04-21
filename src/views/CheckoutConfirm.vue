@@ -62,15 +62,17 @@
           <div class="bg-white rounded-2xl shadow-xl p-6 sticky top-6">
             <h2 class="text-xl font-bold text-gray-900 mb-4">Đơn hàng của bạn</h2>
             
-            <div class="space-y-4 max-h-80 overflow-y-auto pr-2 custom-scrollbar mb-6">
+            <div class="space-y-3 max-h-96 overflow-y-auto pr-2 custom-scrollbar mb-6">
               <div v-for="item in cart.items" :key="item.id" class="flex items-center gap-3">
-                <div class="relative">
-                  <img :src="getImageUrl(item.image_url) || 'https://via.placeholder.com/60'" class="w-14 h-14 object-cover rounded-lg border border-gray-100" />
-                  <span class="absolute -top-2 -right-2 bg-gray-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-sm">{{ item.quantity }}</span>
+                <div class="relative overflow-visible">
+                  <img :src="getImageUrl(item.image_url) || 'https://via.placeholder.com/60'" class="w-16 h-16 object-cover rounded-lg border border-gray-100" />
+                  <span class="absolute -top-2 -right-2 bg-gray-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">{{ item.quantity }}</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <h3 class="text-sm font-bold text-gray-900 truncate">{{ item.name }}</h3>
-                  <p class="text-xs text-gray-500">{{ item.price.toLocaleString('vi-VN') }} ₫</p>
+                  <h3 class="text-sm font-medium text-gray-900 truncate">{{ item.name }}</h3>
+                  <p class="text-sm text-gray-500">
+                    {{ Number(item.price).toLocaleString('vi-VN', { maximumFractionDigits: 0 }) }} ₫
+                  </p>
                 </div>
                 <div class="text-sm font-bold text-gray-900">
                   {{ (item.price * item.quantity).toLocaleString('vi-VN') }} ₫
@@ -78,33 +80,33 @@
               </div>
             </div>
 
-            <div class="border-t pt-4 space-y-3">
-              <div class="flex justify-between text-gray-600 text-sm font-medium">
+            <div class="border-t pt-4 space-y-2">
+              <div class="flex justify-between text-gray-600">
                 <span>Tạm tính:</span>
                 <span>{{ cart.totalPrice.toLocaleString('vi-VN') }} ₫</span>
               </div>
-              <div class="flex justify-between text-gray-600 text-sm font-medium">
+              <div class="flex justify-between text-gray-600">
                 <span>Phí vận chuyển:</span>
-                <span class="text-green-600">Miễn phí</span>
+                <span class="text-green-600 font-medium">Miễn phí</span>
               </div>
-              <div v-if="checkout.appliedCoupon" class="flex justify-between text-green-600 font-medium">
+              <div v-if="checkout.appliedCoupon" class="flex justify-between font-medium text-green-600">
                 <span>Giảm giá ({{ checkout.appliedCoupon.code }}):</span>
-                <span>-{{ discountAmount.toLocaleString('vi-VN') }} ₫</span>
+                <span>
+                  {{ discountAmount > 0 ? '-' + discountAmount.toLocaleString('vi-VN') + ' ₫' : 'Đã áp dụng' }}
+                </span>
               </div>
-              <div class="flex justify-between text-xl font-black text-red-600 pt-3 border-t">
-                <span>TỔNG CỘNG:</span>
-                <span>{{ finalPrice.toLocaleString('vi-VN') }} ₫</span>
+              <div class="flex justify-between font-bold text-xl mt-2 border-t pt-4 text-gray-900">
+                <span>Tổng cộng:</span>
+                <span class="text-red-600">{{ finalPrice.toLocaleString('vi-VN') }} ₫</span>
               </div>
             </div>
 
-            <div class="mt-8 space-y-3">
+            <div class="mt-6 flex flex-col gap-3">
               <button @click="handlePlaceOrder" :disabled="loading" 
-                class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-200 active:scale-[0.98] disabled:bg-gray-400">
+                class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">
                 {{ loading ? 'Đang xử lý...' : 'Xác nhận đặt hàng' }}
               </button>
-              <button @click="router.back()" class="w-full text-gray-500 font-bold py-2 hover:text-blue-600 transition-colors">
-                Quay lại chỉnh sửa
-              </button>
+              <router-link to="/checkout-info" class="text-center text-gray-500 hover:text-blue-600 font-medium">Quay lại chỉnh sửa</router-link>
             </div>
           </div>
         </div>
