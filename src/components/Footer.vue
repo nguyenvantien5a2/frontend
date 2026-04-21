@@ -43,7 +43,7 @@
                     <div class="flex space-x-4 mt-4">
                         <a href="#" class="text-blue-600 hover:opacity-80">Facebook</a>
                         <a href="#" class="text-red-600 hover:opacity-80">Youtube</a>
-                        <a href="#" class="text-blue-400 hover:opacity-80">Zalo</a>
+                        <a href="https://zalo.me/0586364516" class="text-blue-400 hover:opacity-80">Zalo</a>
                     </div>
                 </div>
             </div>
