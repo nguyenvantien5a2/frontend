@@ -104,11 +104,11 @@
             <div class="flex h-80">
               <!-- Y-Axis -->
               <div class="flex flex-col justify-between text-xs font-bold text-gray-500 pr-4 py-2 text-right w-20">
-                <span>{{ formatCurrency(maxRevenue) }}</span>
-                <span>{{ formatCurrency(maxRevenue * 0.75) }}</span>
-                <span>{{ formatCurrency(maxRevenue * 0.5) }}</span>
-                <span>{{ formatCurrency(maxRevenue * 0.25) }}</span>
-                <span>0 ₫</span>
+                <span>{{ formatShortCurrency(maxRevenue) }}</span>
+                <span>{{ formatShortCurrency(maxRevenue * 0.75) }}</span>
+                <span>{{ formatShortCurrency(maxRevenue * 0.5) }}</span>
+                <span>{{ formatShortCurrency(maxRevenue * 0.25) }}</span>
+                <span>0</span>
               </div>
 
               <!-- Chart Area -->
@@ -136,13 +136,13 @@
 
                     <!-- Bar -->
                     <div
-                      class="w-full bg-blue-500 rounded-t hover:bg-blue-600 transition-colors min-h-[4px]"
+                      class="w-full bg-green-500 rounded-t hover:bg-green-600 transition-colors min-h-[4px]"
                       :style="{ height: calculateHeight(value) + '%' }"
                     ></div>
 
                     <!-- X-Axis Label -->
-                    <span class="absolute -bottom-6 text-xs font-medium text-gray-600">
-                      {{ formatDate(key) }}
+                    <span v-if="shouldShowLabel(key)" class="absolute -bottom-6 text-xs font-medium text-gray-600 whitespace-nowrap">
+                      {{ formatXLabel(key) }}
                     </span>
                   </div>
                 </div>
@@ -177,7 +177,7 @@
               </div>
 
               <div class="text-sm text-gray-500 text-center px-4">
-                Biểu đồ tròn hiển thị tỷ lệ số sản phẩm theo danh mục. Mỗi danh mục có màu riêng để dễ phân biệt.
+                Biểu đồ tròn hiển thị tỷ lệ sản phẩm theo danh mục
               </div>
             </div>
 
@@ -370,7 +370,10 @@ const fetchData = async (period, isInitial = false) => {
   try {
     const { data } = await api.get('/admin/dashboard/stats', { params: { period } })
     if (isInitial) stats.value = data
-    else stats.value.revenueChart = data.revenueChart
+    else {
+      stats.value.revenueChart = data.revenueChart
+      stats.value.orderChart = data.orderChart
+    }
   } catch (err) {
     console.error('Lỗi tải Dashboard:', err)
   } finally {
@@ -392,8 +395,15 @@ onMounted(() => {
 
 // Computed properties
 const maxRevenue = computed(() => {
-  const values = Object.values(stats.value.revenueChart || {})
-  return Math.max(...values, 0) || 1000000
+  const values = Object.values(stats.value.revenueChart || {}).map(v => Number(v))
+  const actualMax = Math.max(...values, 0)
+  // Nếu không có dữ liệu, trả về 1000 để tránh chia cho 0, nếu có thì dùng giá trị lớn nhất thật sự
+  return actualMax > 0 ? actualMax : 1000
+})
+
+const maxOrders = computed(() => {
+  const values = Object.values(stats.value.orderChart || {})
+  return Math.max(...values, 0) || 10
 })
 
 const calculateHeight = (value) => {
@@ -401,17 +411,31 @@ const calculateHeight = (value) => {
   return (value / maxRevenue.value) * 100
 }
 
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-  if (/^\d{2}$/.test(dateString)) {
-    return `${dateString}h`
+const calculateOrderHeight = (value) => {
+  if (maxOrders.value === 0) return 0
+  return (value / maxOrders.value) * 100
+}
+
+const formatXLabel = (key) => {
+  if (!key) return ''
+  // Nếu là lọc theo giờ (00, 01, 02...)
+  if (selectedPeriod.value === 'today') {
+    return `${key.toString().padStart(2, '0')}h`
   }
-  if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
-    const [year, month, day] = dateString.split('-')
-    return `${Number(day)}/${Number(month)}`
+  // Nếu là lọc theo ngày (YYYY-MM-DD)
+  const parts = key.split('-')
+  if (parts.length === 3) {
+    return `${parts[2]}/${parts[1]}`
   }
-  const date = new Date(dateString)
-  return `${date.getDate()}/${date.getMonth() + 1}`
+  return key
+}
+
+// Hàm kiểm tra xem có nên hiện nhãn trục X không (để tránh đè chữ khi quá dày)
+const shouldShowLabel = (key) => {
+  if (selectedPeriod.value !== 'today') return true
+  // Đối với biểu đồ 24 giờ, chỉ hiện nhãn cách mỗi 4 tiếng (0h, 4h, 8h...)
+  const hour = parseInt(key)
+  return hour % 4 === 0 || hour === 23
 }
 
 const chartTitle = computed(() => {
@@ -476,6 +500,12 @@ const pieChartStyle = computed(() => {
 // Helper functions
 const formatCurrency = (value) => {
   return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value || 0)
+}
+
+const formatShortCurrency = (value) => {
+  if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M'
+  if (value >= 1000) return (value / 1000).toFixed(0) + 'K'
+  return value
 }
 
 const statusClass = (status) => {

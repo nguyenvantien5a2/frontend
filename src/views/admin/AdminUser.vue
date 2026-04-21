@@ -172,7 +172,9 @@
                   <tr v-for="order in userOrders" :key="order.id" class="hover:bg-gray-50">
                     <td class="px-4 py-3 text-sm font-semibold text-gray-700">#{{ order.id }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ new Date(order.created_at).toLocaleString('vi-VN') }}</td>
-                    <td class="px-4 py-3 text-sm font-bold text-red-600">{{ order.total_price.toLocaleString('vi-VN') }} ₫</td>
+                    <td class="px-4 py-3 text-sm font-bold text-red-600">
+                      {{ Number(order.total_price).toLocaleString('vi-VN', { maximumFractionDigits: 0 }) }} ₫
+                    </td>
                     <td class="px-4 py-3 text-center">
                       <span :class="statusClass(order.status)" class="px-2 py-1 rounded-full text-xs font-bold">{{ statusText(order.status) }}</span>
                     </td>

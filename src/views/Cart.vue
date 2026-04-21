@@ -21,7 +21,9 @@
               
               <div class="flex-1 text-center sm:text-left">
                 <h3 class="font-bold text-lg text-gray-900 mb-1">{{ item.name }}</h3>
-                <p class="text-blue-600 font-medium">{{ item.price.toLocaleString('vi-VN') }} ₫</p>
+                <p class="text-blue-600 font-medium">
+  {{ Number(item.price).toLocaleString('vi-VN', { maximumFractionDigits: 0 }) }} ₫
+</p>
                 <p class="text-sm text-gray-500 mt-1">Kho: {{ item.stock }}</p>
               </div>
 

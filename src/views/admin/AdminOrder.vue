@@ -88,13 +88,13 @@
         </span>
         <div class="space-x-2">
               <button 
-            @click="fetchOrders(currentPage.value - 1)" 
+            @click="fetchOrders(currentPage - 1)" 
             :disabled="currentPage === 0"
             class="px-3 py-1 border rounded bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium text-gray-700">
             Trước
           </button>
           <button 
-            @click="fetchOrders(currentPage.value + 1)" 
+            @click="fetchOrders(currentPage + 1)" 
             :disabled="currentPage >= totalPages - 1"
             class="px-3 py-1 border rounded bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium text-gray-700">
             Sau
@@ -214,7 +214,9 @@ const currentPage = ref(0)
 const pageSize = ref(10)
 const totalPages = ref(0)
 const totalElements = ref(0)
-const paginatedOrders = computed(() => orders.value)
+const paginatedOrders = computed(() => {
+  return orders.value && orders.value.length > 0 ? orders.value : []
+})
 const showModal = ref(false)
 const selectedOrder = ref(null)
 const toastStore = useToastStore()
@@ -228,11 +230,11 @@ const fetchOrders = async (pageIndex = 0) => {
       }
     })
 
-    orders.value = res.data.data || []
-    currentPage.value = (res.data.current_page || 1) - 1
-    pageSize.value = res.data.per_page || 10
-    totalPages.value = res.data.last_page || 0
-    totalElements.value = res.data.total || orders.value.length
+    orders.value = res.data.content || []
+    currentPage.value = res.data.number || 0
+    pageSize.value = res.data.size || 10
+    totalPages.value = res.data.totalPages || 0
+    totalElements.value = res.data.totalElements || orders.value.length
   } catch (error) {
     console.error("Lỗi tải đơn hàng:", error)
     toastStore.error('Không thể tải danh sách đơn hàng.')
@@ -280,6 +282,18 @@ const closeModal = () => {
     selectedOrder.value = null
   }, 300)
 }
+
+const getPaymentMethodText = (method) => {
+  const methods = {
+    'COD': 'Thanh toán khi nhận hàng (COD)',
+    'MOMO': 'Ví MoMo',
+    'VNPAY': 'VNPay',
+    'BANK_TRANSFER': 'Chuyển khoản'
+  }
+  return methods[method] || method || 'Chưa xác định'
+}
+
+const isMoMo = (method) => method === 'MOMO'
 
 const statusClass = (status) => {
   const classes = {
