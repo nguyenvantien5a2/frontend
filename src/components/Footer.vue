@@ -12,12 +12,12 @@
 
                 <!-- Cột 2: Chính sách -->
                 <div>
-                    <h4 class="font-bold text-gray-800 mb-4">Chính sách chung</h4>
+                    <h4 class="font-bold text-gray-800 mb-4">Liên kết nhanh</h4>
                     <ul class="text-sm text-gray-600 space-y-2">
-                        <li><a href="#" class="hover:text-blue-600">Chính sách bảo hành</a></li>
-                        <li><a href="#" class="hover:text-blue-600">Chính sách đổi trả</a></li>
-                        <li><a href="#" class="hover:text-blue-600">Vận chuyển & Giao hàng</a></li>
-                        <li><a href="#" class="hover:text-blue-600">Bảo mật thông tin</a></li>
+                        <li><a href="/" class="hover:text-blue-600">Trang chủ </a></li>
+                        <li><a href="/products" class="hover:text-blue-600">Sản phẩm</a></li>
+                        <li><a href="/promotions" class="hover:text-blue-600">Khuyến mãi</a></li>
+                        <li><a href="/profile" class="hover:text-blue-600">Tài khoản</a></li>
                     </ul>
                 </div>
 
