@@ -1,6 +1,6 @@
 # LKMT Store - Frontend (Vue.js 3 + Vite)
 
-Hệ thống cửa hàng kinh doanh linh kiện máy tính LKMT. Dự án này được xây dựng bằng Vue.js 3, tích hợp với hệ thống API Laravel phía Backend.
+Website bán linh kiện máy tính LKMT. Dự án được xây dựng bằng Vue.js 3, tích hợp với hệ thống API Laravel phía Backend.
 
 ## Công nghệ sử dụng
 
