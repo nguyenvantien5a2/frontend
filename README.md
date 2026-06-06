@@ -86,10 +86,4 @@ frontend/
    npm run build
    ```
 
-## Lưu ý kỹ thuật cho Dev
-
-- **Lưu trữ Token:** Token được lưu trong `localStorage` và tự động đính kèm vào Header qua Axios Interceptor.
-- **Xử lý Ảnh:** Backend trả về URL qua `asset('storage/...')`, Frontend cần hiển thị chính xác các đường dẫn này.
-- **Cập nhật Sản phẩm:** Khi cập nhật sản phẩm ở Admin, hãy lưu ý Backend sử dụng `json_decode` cho field `product` trong request.
-
 ---
