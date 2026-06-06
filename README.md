@@ -42,9 +42,9 @@ frontend/
 └── vite.config.js       # Cấu hình Vite
 ```
 
-## Tính năng chính (Đã khớp với Backend)
+## Tính năng chính 
 
-### 👤 Phân hệ Người dùng (Customer)
+### Phân hệ Người dùng (Customer)
 - **Trang chủ & Cửa hàng:** Hiển thị sản phẩm mới nhất, lọc theo danh mục, tìm kiếm (ILIKE).
 - **Giỏ hàng & Khuyến mãi:** Tích hợp kiểm tra mã giảm giá (`/api/check-coupon`) trước khi đặt hàng.
 - **Đặt hàng (Checkout):** Quy trình thanh toán lưu thông tin khách hàng và chi tiết sản phẩm.
